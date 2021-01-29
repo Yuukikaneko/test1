@@ -17,16 +17,28 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+    $sex = $faker->randomElement($array=['male','female']);
+    $address_all = $faker->address();
+    $address = explode(" ", $address_all, 2);
+    $code1 = floor($address[0] / 10000);
+    $code2 = $address[0] % 10000;
+
     return [
-        'name' => $faker->name,
+        'name' => $faker->name($sex),
+        'sex' => $sex,
+        'weight' => $faker->randomFloat($nbMaxDecimals = 1, $min = 40, $max = 70),
+        'birthday' => $faker->dateTimeBetween('-45 years', '-18years')->format('Y-m-d'),
+        'postal_id' => $faker->numberBetween(1,50),
+        'address' => $address[1],
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
-        'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password' => '$2y$10$DTFoF0wmw5qudX4uxTHQgus/4Wk21hK6SgLUmJ6JXIEOPPdXC7yjK',
+        'community_id' => $faker->numberBetween(1000,1006),
         'remember_token' => Str::random(10),
     ];
 });
 
-$factory->define(App\Person::class,
+/*$factory->define(App\Person::class,
     function (Faker $faker) {
         return [
             'name' => $faker->name,
@@ -34,3 +46,4 @@ $factory->define(App\Person::class,
             'age' => random_int(1,99),
         ];
     });
+*/

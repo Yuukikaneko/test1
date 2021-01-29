@@ -2,12 +2,15 @@
 
 <button class="click1" onclick="location.href='./top'">戻る</button><br>
 
-<form action="/company3" method="post">
+
 @section('content')
+
    <table>
     <tr>
         <th>品番</th>
         <th>品名</th>
+        <th>写真</th>
+        <th>写真</th>
         <th>カテゴリー1</th>
         <th>カテゴリー２</th>
         <th>サイズ</th>
@@ -21,6 +24,8 @@
     <tr>
         <td>{{ $item->goods_id }}</td>
         <td>{{ $item->goods_name }}</td>
+        <td><img src="{{ $item->goods_image }}"></td>
+        <td>{{ $item->category1 }}</td>
         <td>{{ $item->category1 }}</td>
         <td>{{ $item->category2 }}</td>
         <td>{{ $item->size }}</td>
@@ -32,7 +37,6 @@
     </tr>
     @endforeach
 </table>
-<input class="add" type="button" onclick="location.href='./company/add'" value="新規登録"><br>
-{{ $items->links() }}
+<input class="add" type="button" onclick="location.href='../company/add'" value="新規登録"><br>
 
 @endsection

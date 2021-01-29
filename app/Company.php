@@ -2,16 +2,41 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Company extends Model
+class company extends Authenticatable
 {
-    protected $guarded = array('company_id');
-    protected $table = 'company';
+    use Notifiable;
 
-    public static $rules = array(
-        'company_id' => 'required',
-        'company' => 'required',
-        'password' => 'required|alpha-num',
-    );
+    protected $table = 'company';
+    protected $guard = 'company';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'id','company_name','name','phone_number','email', 'password'
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 }

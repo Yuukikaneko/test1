@@ -10,7 +10,7 @@
     <textarea class="contact" name="Comment" rows="5"cols="30"　size="100" value="コメント"></textarea>
     <br>
     
-    <input class="click2" type="button" onclick="location.href='./done'" value="送信"><br>
+    <input class="click2" type="button" onclick="location.href='./done'" value="確認"><br>
 </form>
 
 </body>

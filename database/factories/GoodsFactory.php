@@ -24,11 +24,13 @@ $factory->define(Goods::class, function (Faker $faker) {
 
     return [
         'goods_name' => $category2 . '-' .  $faker->numberBetween(1,150),
+        'goods_image' => 'goods_image' . $faker->unique()->numberBetween(1,150) . '.png',
+        'price' => round($faker->numberBetween(3000,10000), -2),
         'category1' => $category1,
         'category2' => $category2,
         'size' => $size,
         'color' => $faker -> safeColorName(),
         'sex' => $sex,
-        'company_id' => $faker->numberBetween(1,20),
+        'company_id' => $faker->numberBetween(1,15),
     ];
 });

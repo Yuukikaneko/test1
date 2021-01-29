@@ -13,13 +13,6 @@ class CompanyTableSeeder extends Seeder
      */
     public function run()
     {
-/*        $param = [
-            "company_id" => "1",
-            "password" => "A000",
-            "company" => "クエスト",
-        ];
-        DB::table("company")->insert($param);
-*/
-        factory(Company::class, 20)->create();
+        factory(Company::class, 15)->create();      
     }
 }

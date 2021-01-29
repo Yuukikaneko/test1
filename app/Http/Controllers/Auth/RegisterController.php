@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Administrator;
+use App\Company;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -38,6 +41,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:admin');
     }
 
     /**
@@ -49,8 +53,15 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'company' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'companypass' => ['required', 'string', 'min:8', 'confirmed'],
+            'name' => ['required', 'string', 'max:255'],
+            'sex' => ['required', 'string'],
+            'weight' => ['required', 'numeric', 'between: 10, 200'],
+            'birthday' => ['required', 'string'],
+            'postal_code' => ['string'],
+            'address' => ['string'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'community_id' => ['numeric']
         ]);
     }
 
@@ -64,8 +75,63 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'sex' => $data['sex'],
+            'weight' => $data['weight'],
+            'birthday' => $data['birthday'],
+            'postal_code' => $data['postal_code'],
+            'address' => $data['address'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    protected function adminValidator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:administrator'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
+    public function showAdminRegisterForm()
+    {
+        return view('auth.register', ['authgroup' => 'admin']);
+    }
+
+    protected function createAdmin(Request $request)
+    {
+        $this->adminValidator($request->all())->validate();
+        $admin = Administrator::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->intended('login/admin');
+    }
+
+    protected function companyValidator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:administrator'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
+    public function showCompanyRegisterForm()
+    {
+        return view('auth.register', ['authgroup' => 'company']);
+    }
+
+    protected function createCompany(Request $request)
+    {
+        $this->companyValidator($request->all())->validate();
+        $admin = Company::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->intended('login/company');
     }
 }

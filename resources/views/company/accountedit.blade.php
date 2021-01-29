@@ -1,6 +1,6 @@
 @extends('layouts.accountedit')
 
-<button class="click1" onclick="location.href='./top'">戻る</button><br>
+<input class="click1" type="button" onclick="location.href='./top'" value="戻る"><br>
   
 @section('content')
    <form action="/company" method="post">
@@ -13,7 +13,7 @@
        <tr><th></th><td><font color="red">{{$errors->first('login_id')}}</font></td></tr>
        @endif
 
-       <hr size="1">
+       <br>
        <tr><th>確認: </th><td><input type="password" name="password" value=""></td></tr>
        <br>
        <tr><th></th><td>※必須項目。数字のみ入力。8文字以上16文字以内の入力。</td></tr>

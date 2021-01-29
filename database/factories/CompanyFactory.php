@@ -4,11 +4,15 @@
 
 use App\Company;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 
 $factory->define(Company::class, function (Faker $faker) {
     return [
-        'company' => $faker->unique()->company(),
-        'company_pass' => Str::random(10)
+        "company_name" => $faker->company(),
+        "name" => $faker->name(),
+        "phone_number" => $faker->phoneNumber(),
+        'email' => $faker->unique()->companyEmail,
+        'email_verified_at' => now(),
+        'password' => '$2y$10$DTFoF0wmw5qudX4uxTHQgus/4Wk21hK6SgLUmJ6JXIEOPPdXC7yjK',
+        'remember_token' => Str::random(10),
     ];
 });
